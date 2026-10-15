@@ -2,7 +2,8 @@
 
 En hemsida som fungerar som mitt portfolio, med länkar och coola saker
 överallt. Spel och andra hemsidor läggs in och länkas härifrån efter hand.
-Byggd med Astro, strikt TypeScript och pnpm, hostad på Vercel.
+Byggd med SvelteKit, strikt TypeScript och pnpm, hostad på Vercel.
+Inloggning och backend kommer senare.
 
 Den här filen handlar om process och samarbete: hur man jobbar i repot, inte
 vad projektet gör. Allt om själva projektet (hårda regler, hur det körs,
@@ -172,7 +173,8 @@ aktuella. Anropa dem direkt i stället för att återskapa deras logik.
 - **`bakjob-core`:** `git-checkpoint` (commit vid rätt punkt), `vault-update`
   och `new-decision` (håller vaulten aktuell), `smoke-test`; agenterna
   `architect` (planerar större ändringar), `test-runner` (kör och läser
-  kontrollerna), `vault-scribe` och `config-value-auditor`.
+  kontrollerna), `vault-scribe` och `config-value-auditor` (letar efter
+  hårdkodade värden som hör hemma i `src/lib/config.ts`).
 - **`bakjob-github`:** `github-issues-workflow` (skapa, ta och stänga issues
   med `gh`).
 - **`bakjob-web`:** `design-taste-frontend` och `redesign-skill` (visuell

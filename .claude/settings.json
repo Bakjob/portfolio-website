@@ -21,7 +21,7 @@
       "Bash(pnpm lint:*)",
       "Bash(pnpm format:*)",
       "Bash(pnpm exec prettier:*)",
-      "Bash(pnpm astro:*)",
+      "Bash(pnpm dlx sv:*)",
       "Bash(git status:*)",
       "Bash(git diff:*)",
       "Bash(git log:*)",

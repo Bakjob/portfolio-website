@@ -9,7 +9,9 @@ Ribban som `seo-a11y-auditor` kollar mot. Kommer från bootstrap-intervjun
 - **Mäts på:** startsidan, projektlistan och minst en projektsida, på mobil
   (Lighthouse standard-throttling).
 - Tunga effekter och inbäddade spel får inte dra ner en sida under 90:
-  ladda dem sent (`client:visible`) eller bakom en klick-för-att-spela.
+  ladda dem sent (dynamisk import när de syns) eller bakom en
+  klick-för-att-spela.
+- Sidor bakom inloggning har `noindex` och räknas inte i SEO-målen.
 
 ## Tillgänglighet
 

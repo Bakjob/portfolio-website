@@ -26,12 +26,20 @@ Korta och tvingande. Krockar något här med `CLAUDE.md` vinner den här filen.
   inga `@ts-ignore` som täcker över riktiga fel.
 - **pnpm är enda pakethanteraren.** Inga `package-lock.json` eller
   `yarn.lock`; `pnpm-lock.yaml` committas.
-- **Astro-sidor är statiska som standard.** Interaktiva delar är öar
-  (`client:*`-direktiv) och laddas så sent som möjligt (`client:visible`,
-  `client:idle`) så att effekterna inte sänker Lighthouse under ribban i
-  `quality-targets.md`.
+- **Innehållssidor förrenderas.** Sidor utan inloggning eller
+  per-besökar-data har `export const prerender = true`.
+- **Serverkod hålls på servern.** Databas, inloggning och hemligheter bara i
+  `src/lib/server/`, `+page.server.ts`, `+layout.server.ts` och `+server.ts`.
+  Hemligheter läses bara via `$env/static/private` eller
+  `$env/dynamic/private`, aldrig med `PUBLIC_`-prefix.
+- **Tunga effekter och inbäddade spel laddas sent** (dynamisk import när de
+  syns, eller bakom en klick-för-att-spela), så att de inte sänker
+  Lighthouse under ribban i `quality-targets.md`.
 - **Effekter respekterar `prefers-reduced-motion`.** Varje animation har ett
   lugnt alternativ.
 - **Externa länkar** som öppnas i ny flik har `rel="noopener noreferrer"`.
+- **Config file:** `src/lib/config.ts`. Varje justerbart värde ligger där:
+  tider och hastigheter för animationer, tröskelvärden, storlekar, gränser
+  (t.ex. sessionslängd, antal projekt per sida).
 - **Hemligheter committas aldrig.** `.env*` är ignorerade; bara
   `.env.example` (utan värden) får finnas i repot.

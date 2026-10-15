@@ -24,3 +24,4 @@ lägg till en ny numrerad fil och peka den gamlas `Status`-rad på den.
 
 | # | Titel | Status |
 |---|---|---|
+| [0001](./0001-sveltekit.md) | SvelteKit i stället för Astro | Gällande |

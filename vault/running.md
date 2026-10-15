@@ -1,7 +1,7 @@
 # Running
 
-Kommandona gäller när Astro-projektet är skapat (första PR:en). Tills dess
-finns ingen `package.json`.
+Kommandona gäller när SvelteKit-projektet är skapat (första PR:en efter
+setup). Tills dess finns ingen `package.json`.
 
 ## Setup
 
@@ -15,16 +15,13 @@ Kräver Node 22 eller senare (utvecklas på Node 24).
 Skapa projektet (bara första gången):
 
 ```sh
-pnpm create astro@latest . --template minimal --install --no-git
+pnpm dlx sv create . --template minimal --types ts --no-add-ons --install pnpm
+pnpm dlx sv add prettier eslint
+pnpm add -D @sveltejs/adapter-vercel   # och byt adapter i svelte.config.js
+corepack use pnpm@latest               # skriver "packageManager" i package.json, behövs av CI
 ```
 
-Kontrollera sedan att `tsconfig.json` ärver `astro/tsconfigs/strict` (eller
-`strictest`), och lås pnpm-versionen så att CI (`pnpm/action-setup`) hittar
-den:
-
-```sh
-corepack use pnpm@latest   # skriver "packageManager" i package.json
-```
+Kontrollera sedan att `tsconfig.json` har `"strict": true`.
 
 ## Dev
 
@@ -32,13 +29,13 @@ corepack use pnpm@latest   # skriver "packageManager" i package.json
 pnpm dev
 ```
 
-Dev-servern körs på <http://localhost:4321>.
+Dev-servern körs på <http://localhost:5173>.
 
 ## Build
 
 ```sh
-pnpm build     # astro build, output i dist/
-pnpm preview   # serverar dist/ lokalt för en sista koll
+pnpm build     # vite build med adapter-vercel
+pnpm preview   # kör bygget lokalt på http://localhost:4173
 ```
 
 ## Test
@@ -46,8 +43,8 @@ pnpm preview   # serverar dist/ lokalt för en sista koll
 Inga enhets- eller E2E-tester. Kontrollerna är bygge, typecheck och lint:
 
 ```sh
-pnpm check   # astro check: typfel i .astro- och .ts-filer (@astrojs/check)
-pnpm lint    # ESLint med eslint-plugin-astro
+pnpm check   # svelte-kit sync + svelte-check: typfel i .svelte- och .ts-filer
+pnpm lint    # prettier --check . && eslint .
 pnpm build
 ```
 
@@ -56,9 +53,8 @@ Samma tre körs i CI (`.github/workflows/ci.yml`) på varje PR.
 ## Lint and format
 
 ```sh
-pnpm lint           # eslint .
-pnpm format         # prettier --write . (med prettier-plugin-astro)
-pnpm format:check   # prettier --check .
+pnpm lint     # prettier --check . && eslint .
+pnpm format   # prettier --write . (med prettier-plugin-svelte)
 ```
 
 Prettier körs också automatiskt på varje fil Claude ändrar (hook i
@@ -70,15 +66,17 @@ Inget smoke test än. Se `status/open-questions.md`.
 
 ## Deploy
 
-- **Plattform:** Vercel, kopplat till GitHub-repot `Bakjob/portfolio-website`.
-  Statisk output, ingen adapter behövs.
+- **Plattform:** Vercel, kopplat till GitHub-repot `Bakjob/portfolio-website`,
+  med `@sveltejs/adapter-vercel`. Förrenderade sidor serveras statiskt;
+  serverkod (`+page.server.ts`, `+server.ts`) körs som Vercel Functions.
 - **Projektnamn på Vercel:** inte kopplat än (förslag: `portfolio-website`).
 - **Produktionsdomän:** ingen egen domän än; Vercels `*.vercel.app`-adress.
 - **Produktionsbranch:** `main`. Varje push till `main` deployas
   automatiskt, och varje PR får en preview-URL.
 - **Miljövariabler:** inga än. Nya läggs in i Vercels projektinställningar
-  och med namn (aldrig värden) i `.env.example`.
+  (Production och Preview separat) och med namn (aldrig värden) i
+  `.env.example`. Lokalt i `.env`, som är git-ignorerad.
 - **Rollback:** i Vercels dashboard, välj en tidigare deployment och
   "Promote to Production" (eller `vercel rollback`).
 - **Efter lansering:** lägg in sajten i Google Search Console och skicka in
-  sitemapen (`@astrojs/sitemap`, `/sitemap-index.xml`).
+  en sitemap (en `src/routes/sitemap.xml/+server.ts`, förrenderad).

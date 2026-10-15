@@ -7,8 +7,8 @@ roll.
 - **Smoke test:** lägg till kommando och kontroller under `## Smoke test` i
   `running.md` när sajten finns. Förslag: bygg + kontroll av trasiga interna
   och externa länkar (sajten är full av länkar).
-- **Lint-kommando:** bekräfta `pnpm lint` (ESLint med Astro-plugin) i
-  `running.md` när Astro-projektet är skapat; uppdatera CI om skriptnamnen
+- **Lint-kommando:** bekräfta `pnpm lint` (Prettier-check + ESLint via `sv add`) i
+  `running.md` när SvelteKit-projektet är skapat; uppdatera CI om skriptnamnen
   blir andra.
 - **Vercel-projekt:** skriv in projektnamnet på Vercel och den faktiska
   produktions-URL:en (`*.vercel.app`) i `running.md` under `## Deploy` när
@@ -21,3 +21,7 @@ roll.
   `design/page-families.md`). Fylls i när första projektsidan byggs.
 - **Visuell stil och varumärke:** färger, typsnitt och vilka "coola saker"
   (animationer, effekter) som är signaturen. Hamnar i `design/`.
+- **Databas och inloggning:** ingen databas än. Välj när inloggningen faktiskt
+  byggs (t.ex. Supabase med inbyggd auth, eller Postgres via Neon + Better
+  Auth), skriv ett beslut och lägg miljövariablerna i `running.md` och
+  `.env.example`.
